@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <%= resume.name %>'s Resume
+    </title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            color: #444;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section h2 {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        <%= resume.name %>
+    </h1>
+    <p><strong>Date of Birth:</strong>
+        <%= resume.dob %>
+    </p>
+    <p><strong>Email:</strong>
+        <%= resume.email %>
+    </p>
+    <p><strong>Phone:</strong>
+        <%= resume.phone %>
+    </p>
+    <p><strong>Address:</strong>
+        <%= resume.address %>
+    </p>
+
+    <div class="section">
+        <h2>Education</h2>
+        <% if (resume.category==='student' ) { %>
+            <% if (resume.studentType==='ssc' ) { %>
+                <p><strong>School:</strong>
+                    <%= resume.schoolName %>
+                </p>
+                <p><strong>Grade:</strong>
+                    <%= resume.sscGrade %>
+                </p>
+                <p><strong>Role:</strong>
+                    <%= resume.sscRole %>
+                </p>
+                <% } else if (resume.studentType==='intermediate' ) { %>
+                    <p><strong>College:</strong>
+                        <%= resume.interCollege %>
+                    </p>
+                    <p><strong>Grade:</strong>
+                        <%= resume.interGrade %>
+                    </p>
+                    <p><strong>Course:</strong>
+                        <%= resume.interCourse %>
+                    </p>
+                    <p><strong>Role:</strong>
+                        <%= resume.interRole %>
+                    </p>
+                    <% } else if (resume.studentType==='graduation' ) { %>
+                        <p><strong>College:</strong>
+                            <%= resume.gradCollege %>
+                        </p>
+                        <p><strong>Course:</strong>
+                            <%= resume.gradCourse %>
+                        </p>
+                        <p><strong>Specialization:</strong>
+                            <%= resume.specialization %>
+                        </p>
+                        <p><strong>Percentage:</strong>
+                            <%= resume.gradGrade %>
+                        </p>
+                        <p><strong>Role:</strong>
+                            <%= resume.gradRole %>
+                        </p>
+                        <% } %>
+                            <% } else if (resume.category==='fresher' ) { %>
+                                <p><strong>Junior College:</strong>
+                                    <%= resume.juniorCollege %> (<%= resume.juniorGrade %>)
+                                </p>
+                                <p><strong>Degree College:</strong>
+                                    <%= resume.fresherCollege %>
+                                </p>
+                                <p><strong>Course:</strong>
+                                    <%= resume.fresherCourse %> | <%= resume.fresherSpecialization %>
+                                </p>
+                                <p><strong>Internship:</strong>
+                                    <%= resume.internship %>
+                                </p>
+                                <p><strong>Aggregate:</strong>
+                                    <%= resume.fresherPercent %>
+                                </p>
+                                <% } else if (resume.category==='working' ) { %>
+                                    <p><strong>Qualification:</strong>
+                                        <%= resume.highestQualification %>
+                                    </p>
+                                    <p><strong>Course:</strong>
+                                        <%= resume.workCourse %> | <%= resume.workSpecialization %>
+                                    </p>
+                                    <p><strong>Role:</strong>
+                                        <%= resume.workRole %>
+                                    </p>
+                                    <p><strong>Salary:</strong>
+                                        <%= resume.salary %>
+                                    </p>
+                                    <% } %>
+    </div>
+
+    <div class="section">
+        <h2>Skills & Interests</h2>
+        <p>
+            <%= resume.skills %>
+        </p>
+        <p>
+            <%= resume.interests %>
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Recommended Summary</h2>
+        <ul>
+            <% resume.recommendations.forEach(rec=> { %>
+                <li>
+                    <%= rec %>
+                </li>
+                <% }) %>
+        </ul>
+    </div>
+</body>
+
+</html>
