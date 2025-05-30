@@ -1,2 +1,32 @@
-# Quick-Resume-Builder
-Creating a professional resume can be challenging and time-consuming.Our QuickResume automates resume creation, allowing users to focus on content rather than formatting.Ensuring consistent styling and layout across multiple resume templates.The tool successfully automates the end-to-end process from user input to a formatted, downloadable resume.
+# QuickResume
+
+A dynamic resume builder that allows users to:
+- Register and login securely
+- Choose from multiple professional resume templates (Template1 to Template6)
+- Fill in their personal, educational, and professional details
+- Automatically generate a well-formatted resume with smart sentence suggestions
+- Download the resume as a PDF
+- Edit and regenerate anytime
+
+---
+
+## 🚀 Features
+
+- 🔒 User authentication (register/login)
+- 🎨 Choose from 6 unique HTML resume templates
+- ✍ Auto-generated professional text for summary, experience, and education
+- 📄 Save as PDF (html2pdf.js)
+- 📤 Edit, re-generate, and download your resume
+- 🧠 Intelligent sentence generation based on user category (Student / Fresher / Working)
+
+---
+
+## 🛠 Technologies Used
+
+- *Frontend*: HTML, CSS, JavaScript
+- *Backend*: Node.js, Express.js
+- *Authentication*: Sessions (cookies)
+- *PDF Export*: html2pdf.js
+- *User Storage*: JSON-based (no DB for now)
+
+---
