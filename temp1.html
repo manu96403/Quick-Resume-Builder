@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume - Template 1</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: #222;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #333;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        p {
+            margin: 0.2rem 0 1rem;
+            line-height: 1.6;
+        }
+
+        .section {
+            margin-top: 2rem;
+        }
+
+        .section h2 {
+            border-bottom: 2px solid #007acc;
+            padding-bottom: 0.3rem;
+        }
+
+        .download-btn {
+            margin: 2rem auto;
+            text-align: center;
+        }
+
+        .download-btn button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007acc;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .download-btn button:hover {
+            background-color: #005fa3;
+        }
+
+        #resume {
+            width: 100%;
+            max-width: 800px;
+            overflow: visible;
+        }
+
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            #resume {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .section {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+        }
+
+
+        .section h2 {
+            border-bottom: 2px solid #007acc;
+            padding-bottom: 0.3rem;
+            margin-top: 1.5rem;
+        }
+
+
+
+
+
+        .section p {
+            line-height: 1.6;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="resume">
+        <h1 id="name">Your Name</h1>
+        <h3 id="role">Role</h3>
+        <p id="contact">email | phone | address|linkedin profile|github profile</p>
+
+        <div class="section">
+            <h2>Professional Summary</h2>
+            <p id="summary"></p>
+        </div>
+
+        <div class="section">
+            <h2>Education</h2>
+            <div id="education"></div>
+            <p id="interDetails"></p>
+
+        </div>
+
+        <div class="section">
+            <h2>Skills</h2>
+            <p id="skills"></p>
+        </div>
+
+        <div class="section">
+            <h2>Projects / Experience</h2>
+            <p id="experience"></p>
+        </div>
+
+
+        <div class="section">
+            <h2>Intrests</h2>
+            <p id="interests"></p>
+        </div>
+
+    </div>
+    <div class="download-btn">
+        <button onclick="downloadPDF()">Download as PDF</button>
+    </div>
+    <div style="text-align: center; margin-top: 1rem;">
+        <button onclick="window.location.href='create.html'"
+            style="padding: 10px 20px; background-color: #777; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
+            Edit Details
+        </button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const res = await fetch('/resume-data');
+                const data = await res.json();
+
+                document.getElementById("name").textContent = data.name || "";
+                document.getElementById("role").textContent = data.sscRole || data.interRole || data.gradRole || data.fresherRole || data.workRole || "Professional";
+                document.getElementById("contact").textContent = `${data.email || ''} | ${data.phone || ''} | ${data.address || ''}|${data.lprof || ''}|${data.gprof || ''}`;
+
+                let summary = "";
+                const recommendation = data.interRecommendation || data.gradRecommendation || data.fresherRecommendation || data.workRecommendation || "";
+                if (data.category === "student") {
+                    summary = `Motivated student pursuing ${data.gradCourse || data.interCourse || 'education'} at ${data.gradCollege || data.interCollege || 'a reputed institution'}. Passionate about ${data.gradInterests || data.interIntrests || data.sscIntrests || 'emerging technologies'}, and actively involved in self-driven projects and group collaborations. Possesses a strong foundation in ${data.gradSkills || data.interSkills || data.sscSkills || 'relevant subjects'}, with an eagerness to adapt and grow in fast-paced environments.`;
+                } else if (data.category === "fresher") {
+                    summary = `Recent graduate in ${data.fresherCourse || 'a field'} from ${data.fresherCollege || 'university'}, aiming to begin a career as ${data.fresherRole || 'a passionate contributor'}. Strong understanding of core principles, backed by internship experience in ${data.fresherInternship || 'industry work'}. Adept at problem solving, team collaboration, and eager to take on new responsibilities with a proactive mindset.`;
+                } else {
+                    summary = `${data.workRole || 'Experienced professional'} with solid academic training in ${data.workCourse || 'a field'} from ${data.workCollege || 'a reputed institution'}. Demonstrated expertise in ${data.workSkills || 'key domains'}, and recognized for delivering high-impact results in ${data.workExperience || 'professional roles'}. Effective communicator and team player with a consistent record of performance excellence.`;
+                }
+                document.getElementById("summary").textContent = summary;
+
+                const edu = document.getElementById("education");
+                if (data.schoolName || data.sscGrade) {
+                    edu.innerHTML += `<p><strong>SSC:</strong> Successfully completed secondary education at ${data.schoolName || 'school'}, securing ${data.sscGrade || 'a good grade'}. Built a strong academic foundation with consistent performance throughout the academic year. Developed an early interest in learning and teamwork through various school-level activities.</p>`;
+                }
+                if (data.interCollege || data.interGrade || data.interCourse) {
+                    edu.innerHTML += `<p><strong>Intermediate:</strong> Pursued ${data.interCourse || 'stream'} from ${data.interCollege || 'college'}, achieving ${data.interGrade || 'commendable results'}. Gained analytical skills and problem-solving abilities through core subject projects. Participated in academic seminars and peer-led discussions that enhanced communication and subject understanding.</p>`;
+                }
+                if (data.gradCollege || data.gradCourse || data.gradPercent) {
+                    edu.innerHTML += `<p><strong>Graduation:</strong> Completed ${data.gradCourse || ''} from ${data.gradCollege || ''} with ${data.gradPercent || ''}%. Engaged in team projects and academic presentations that fostered leadership skills. Showed consistent performance and was appreciated for discipline and project contributions.</p>`;
+                }
+                if (data.fresherCollege || data.fresherCourse || data.fresherPercent) {
+                    edu.innerHTML += `<p><strong>Fresher Graduation:</strong> Earned a degree in ${data.fresherCourse || ''} from ${data.fresherCollege || ''}, graduating with ${data.fresherPercent || ''}. Maintained a good academic record and contributed actively in academic and cultural committees. Prepared a final-year project showcasing independent thinking and problem-solving skills.</p>`;
+                }
+                if (data.workCollege || data.workCourse || data.workPercentage) {
+                    edu.innerHTML += `<p><strong>Work Qualification:</strong> Completed professional studies in ${data.workCourse || ''} from ${data.workCollege || ''}, scoring ${data.workPercentage || ''}. Balanced academic learning with real-world skill development through practical assignments and workshops. Demonstrated an ability to multitask and meet strict deadlines with efficiency.</p>`;
+                }
+                const interests = data.gradInterests || data.interIntrests || data.sscIntrests || data.fresherInterests || data.workInterests || "";
+                if (interests && document.getElementById("interests")) {
+                    document.getElementById("interests").textContent = `I am deeply interested in ${interests}, which continuously inspires me to grow professionally and personally. These interests have guided my academic and extracurricular projects.`;
+                }
+                // ✅ Intermediate Section
+                const interCollege = data.interCollege || "";
+                const interCourse = data.interCourse || "";
+                const interGrade = data.interGrade || data.interPercent || "";
+                if (document.getElementById("interDetails")) {
+                    document.getElementById("interDetails").innerHTML =
+                        `<strong>Intermediate:</strong> Studied ${interCourse} at ${interCollege}, achieved ${interGrade}. Developed subject expertise and academic curiosity during this stage.`;
+                }
+                const skills = data.gradSkills || data.interSkills || data.sscSkills || data.fresherSkills || data.workSkills || "";
+                document.getElementById("skills").textContent = `Skilled in: ${skills}. Proficient at applying these tools in practical projects and real-world problem solving.`;
+
+                let experience = data.workExperience || data.fresherInternship || data.gradProjects || data.fresherProjects || data.gradInternship;
+                if (experience) {
+                    experience = `Involved in the following: ${experience}. Demonstrated initiative, effective collaboration, and results-oriented mindset through these contributions. Applied classroom knowledge to real-time problem solving and project delivery. Developed presentation and documentation skills through structured reporting.`;
+                } else {
+                    experience = "Looking forward to contributing to industry projects by applying learned skills and practical knowledge. Possess strong enthusiasm to work in dynamic teams and take on challenging assignments."
+                }
+                document.getElementById("experience").textContent = experience;
+
+            } catch (err) {
+                console.error("❌ Error loading resume data:", err);
+            }
+        });
+        function downloadPDF() {
+            const element = document.getElementById("resume");
+
+            const opt = {
+                margin: [0.3, 0.3], // smaller margins
+                filename: 'resume.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: {
+                    scale: 2,
+                    scrollY: 0
+                },
+                jsPDF: {
+                    unit: 'in',
+                    format: [12, 9], // width, height in inches = landscape A4
+                    orientation: 'portrait'
+                }
+            };
+
+            html2pdf().set(opt).from(element).save();
+        }
+
+
+    </script>
+</body>
+
+</html>
