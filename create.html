@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Create Resume</title>
+    <link rel="stylesheet" href="/sty.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+
+        nav {
+            background: #007bff;
+            padding: 15px;
+            color: white;
+        }
+
+        nav .home {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .form-heading {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 28px;
+        }
+
+        .form-grid {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: auto;
+            gap: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-column {
+            flex: 1 1 45%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full-width {
+            flex: 1 1 100%;
+            padding: 10px 0;
+        }
+
+        input,
+        textarea,
+        select,
+        button {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .dynamic-section,
+        .nested-section {
+            display: none;
+            padding-left: 10px;
+            border-left: 2px solid #ccc;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 class="form-heading">Build Your Resume</h2>
+    <form id="resumeForm" class="form-grid">
+        <!-- Personal Details -->
+        <div class="form-column">
+            <h3>Personal Details</h3>
+            <input type="text" name="name" placeholder="Full Name" required />
+            <input type="date" name="dob" placeholder="Date of Birth" required />
+            <input type="text" name="address" placeholder="Address" required />
+            <input type="text" name="phone" placeholder="Phone Number" required />
+            <input type="email" name="email" placeholder="Email" required />
+        </div>
+
+        <!-- Education & Role Section -->
+        <div class="form-column">
+            <h3>Educational / Role Details</h3>
+            <label for="positionSelect">Category</label>
+            <select name="category" id="positionSelect" onchange="toggleDetails(this.value)" required>
+                <option value="">Select Category</option>
+                <option value="student">Student</option>
+                <option value="fresher">Fresher</option>
+                <option value="working">Working Professional</option>
+            </select>
+
+            <!-- Student Section -->
+            <div id="studentSection" class="dynamic-section">
+                <label>Select Education Level</label>
+                <select name="studentLevel" onchange="toggleStudentLevel(this.value)">
+                    <option value="">Select Level</option>
+                    <option value="ssc">SSC/CBSE</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="graduation">Graduation</option>
+                </select>
+
+                <div id="sscFields" class="nested-section">
+                    <input type="text" name="schoolName" placeholder="School Name" />
+                    <input type="text" name="sscGrade" placeholder="Percentage/Grade" />
+                    <input type="text" name="sscRole" placeholder="Role Applying For" />
+                    <textarea name="sscSkills" placeholder="skills"></textarea>
+                    <textarea name="sscIntrests" placeholder="intrests"></textarea>
+                </div>
+
+                <div id="intermediateFields" class="nested-section">
+                    <input type="text" name="interCollege" placeholder="College Name" />
+                    <input type="text" name="interGrade" placeholder="Percentage/Grade" />
+                    <input type="text" name="interCourse" placeholder="Course" />
+                    <input type="text" name="interRole" placeholder="Role Applying For" />
+                    <textarea name="interSkills" placeholder="skills"></textarea>
+                    <textarea name="interIntrests" placeholder="intrests"></textarea>
+                </div>
+
+                <div id="graduationFields" class="nested-section">
+                    <input type="text" name="gradCollege" placeholder="College/university Name" />
+                    <input type="text" name="gradCourse" placeholder="Course" />
+                    <input type="text" name="gradSpec" placeholder="Specialization" />
+                    <input type="text" name="gradPercent" placeholder="Percentage" />
+                    <input type="text" name="interCollege" placeholder=" junior college name" />
+                    <input type="text" name="interPercent" placeholder="12th percentage" />
+                    <input type="text" name="gradRole" placeholder="Role Applying For" />
+                    <textarea name="gradSkills" placeholder="Skills"></textarea>
+                    <textarea name="gradInternship" placeholder="Internships"></textarea>
+                    <textarea name="gradProjects" placeholder="projects"></textarea>
+                    <input type="text" name="lProf" placeholder="linkedin profile" />
+                    <input type="text" name="gProf" placeholder="github profile" />
+                    <textarea name="gradInterests" placeholder="Intrests"></textarea>
+                </div>
+            </div>
+
+            <!-- Fresher Section -->
+            <div id="fresherSection" class="dynamic-section">
+                <input type="text" name="fresherJuniorCollege" placeholder="Junior College Name" />
+                <input type="text" name="fresherJuniorGrade" placeholder="Percentage/Grade" />
+                <input type="text" name="fresherCollege" placeholder="College/university Name" />
+                <input type="text" name="fresherCourse" placeholder="Course" />
+                <input type="text" name="fresherSpec" placeholder="Specialization" />
+                <input type="text" name="fresherPercent" placeholder="Overall Percentage" />
+                <input type="text" name="fresherRole" placeholder="Role Applying For" />
+                <textarea name="fresherSkills" placeholder="Skills"></textarea>
+                <textarea name="fresherInternship" placeholder="Internship Details"></textarea>
+                <input type="text" name="lProf" placeholder="linkedin profile" />
+                <input type="text" name="gProf" placeholder="github profile" />
+                <textarea name="fresherInterests" placeholder="Intrests"></textarea>
+                <textarea name="fresherProjects" placeholder="projects"></textarea>
+            </div>
+
+            <!-- Working Section -->
+            <div id="workingSection" class="dynamic-section">
+                <input type="text" name="workQual" placeholder="Highest Qualification" />
+                <input type="text" name="workCollege" placeholder="college/university name" />
+                <input type="text" name="workCourse" placeholder="Course" />
+                <input type="text" name="workSpec" placeholder="Specialization" />
+                <input type="text" name="workPercentage" placeholder="percentage" />
+                <input type="text" name="workRole" placeholder=" Role" />
+                <input type="text" name="workExperience" placeholder="experience" />
+                <input type="text" name="workSalary" placeholder="expected Salary" />
+                <textarea name="workSkills" placeholder="Skills"></textarea>
+                <input type="text" name="lProf" placeholder="linkedin profile" />
+                <input type="text" name="gProf" placeholder="github profile" />
+                <textarea name="workInterests" placeholder="Intrests"></textarea>
+            </div>
+        </div>
+
+        <!-- Recommended Text -->
+        <div class="full-width">
+            <label for="recommendation">Recommended Text (Auto-generated):</label>
+            <textarea name="recommendation" id="recommendation" readonly rows="4"></textarea>
+        </div>
+
+        <!-- Template & Submit -->
+        <div class="full-width">
+            <button type="submit">Submit Resume</button>
+        </div>
+    </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const recommendationBox = document.getElementById('recommendation');
+            const form = document.getElementById('resumeForm');
+
+            // Show relevant category section
+            window.toggleDetails = (role) => {
+                document.getElementById('studentSection').style.display = role === 'student' ? 'block' : 'none';
+                document.getElementById('fresherSection').style.display = role === 'fresher' ? 'block' : 'none';
+                document.getElementById('workingSection').style.display = role === 'working' ? 'block' : 'none';
+                recommendationBox.value = generateRecommendation(role);
+            };
+
+            // Show education level fields for students
+            window.toggleStudentLevel = (level) => {
+                document.getElementById('sscFields').style.display = level === 'ssc' ? 'block' : 'none';
+                document.getElementById('intermediateFields').style.display = level === 'intermediate' ? 'block' : 'none';
+                document.getElementById('graduationFields').style.display = level === 'graduation' ? 'block' : 'none';
+            };
+
+            // Recommended summary text
+            function generateRecommendation(role) {
+                switch (role) {
+                    case 'student':
+                        return "Motivated student eager to apply academic knowledge to real-world challenges.";
+                    case 'fresher':
+                        return "Enthusiastic fresher with internship experience and a passion for learning and growth.";
+                    case 'working':
+                        return "Experienced professional with a proven track record in team collaboration and leadership.";
+                    default:
+                        return "";
+                }
+            }
+        });
+    </script>
+    <script src="scri.js"></script>
+</body>
+
+</html>
