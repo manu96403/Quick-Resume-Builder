@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>QuickResumeBuilder</title>
+    <link rel="stylesheet" href="sty.css">
+    <style>
+        .password_wrapper {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        #registerForm {
+            display: none;
+        }
+
+        .form-toggle {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .form-toggle a {
+            color: #007bff;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body class="register">
+    <nav>
+        <a href="public.html" class="home">Home</a>
+    </nav>
+
+    <section class="form-section">
+
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" name="username" placeholder="Username" required>
+            <div class="password_wrapper">
+                <input type="password" id="loginPassword" name="password" placeholder="Password" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility('loginPassword', this)"></span>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+
+        <div class="form-toggle">
+            New user? <a onclick="toggleForms()">Register</a>
+        </div>
+
+        <form id="registerForm">
+            <h2>Register</h2>
+            <input type="text" name="username" placeholder="Username" required>
+            <div class="password_wrapper">
+                <input type="password" id="registerPassword" name="password" placeholder="Password" required>
+                <span class="toggle-password" onclick="togglePasswordVisibility('registerPassword', this)"></span>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+
+    </section>
+
+    <script>
+        function toggleForms() {
+            const regForm = document.getElementById('registerForm');
+            regForm.style.display = regForm.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function togglePasswordVisibility(fieldId, icon) {
+            const field = document.getElementById(fieldId);
+            const isPassword = field.type === 'password';
+            field.type = isPassword ? 'text' : 'password';
+
+        }
+
+        // Registration handling
+        document.getElementById('registerForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const username = e.target.username.value;
+            const password = e.target.password.value;
+
+            const response = await fetch('/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                window.location.href = 'templates.html';
+            } else {
+                alert(result.message || 'Registration failed');
+            }
+        });
+
+        // Login handling
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const username = e.target.username.value;
+            const password = e.target.password.value;
+
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                window.location.href = 'templates.html';
+            } else {
+                alert(result.message || 'Login failed');
+            }
+        });
+    </script>
+</body>
+
+</html>
